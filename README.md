@@ -1,0 +1,109 @@
+# 🚀 Monetra: Gerbang Manajemen User & Role Anda
+
+Selamat datang di **Monetra**, sebuah aplikasi manajemen hak akses yang dirancang dengan presisi untuk memberikan kendali penuh atas sistem Anda. Monetra dibangun dengan pondasi teknologi modern yang menjamin kecepatan, keamanan, dan pengalaman pengguna yang luar biasa.
+
+---
+
+## 🛠 Spesifikasi Aplikasi
+
+Aplikasi ini ditenagai oleh kombinasi _tech stack_ mutakhir:
+
+-   **PHP:** ^8.2
+-   **Laravel:** ^12.0
+-   **Spatie Laravel Permission:** ^6.24
+-   **Tailwind CSS:** ^4.0
+-   **Daisy UI:** ^5.5.14
+
+---
+
+## 🏗 Panduan Setup (Langkah demi Langkah)
+
+Ikuti perjalanan singkat ini untuk menghidupkan Monetra di mesin lokal Anda:
+
+### 1. Mempersiapkan Bahan Baku
+
+Langkah pertama adalah mengunduh semua dependensi PHP yang dibutuhkan:
+
+```bash
+composer install
+```
+
+### 2. Mengatur Napas Aplikasi (Environment)
+
+Salin konfigurasi dasar dan atur koneksi database Anda:
+
+```bash
+cp .env.example .env
+```
+
+_Jangan lupa buka file `.env` dan sesuaikan `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` dengan lingkungan Anda._
+
+### 3. Memberikan Identitas (App Key)
+
+Hasilkan kunci keamanan unik untuk aplikasi Anda:
+
+```bash
+php artisan key:generate
+```
+
+### 4. Membangun Struktur & Menanam Data Dasar
+
+Langkah krusial! Kita akan membangun tabel database dan mengisi data awal (Permissions, Roles, & Users) yang sudah kita rancang dengan apik:
+
+```bash
+php artisan migrate --seed
+```
+
+**Hasil Seeding yang akan Anda lihat di terminal:**
+Saat proses selesai, Anda akan disambut dengan tabel informasi yang terlihat profesional seperti ini:
+
+```text
+🚀 Starting Database Seeding...
+
+Step 1: Creating Permissions...
+✔ Permissions created successfully.
+
+Step 2: Creating Roles...
+✔ Roles created successfully.
+
+Step 3: Syncing Permissions...
+✔ All permissions synced to Super Admin.
+
+Step 4: Creating Users & Assigning Roles...
++--------------+----------------------+----------+-------------+
+| Name         | Email                | Password | Role        |
++--------------+----------------------+----------+-------------+
+| Super Admin  | superadmin@mail.com  | password | super-admin |
+| Admin        | admin@mail.com       | password | admin       |
+| Regular User | user@mail.com        | password | user        |
++--------------+----------------------+----------+-------------+
+
+✨ Database Seeding Completed Successfully! ✨
+```
+
+### 5. Mempercantik Tampilan (Frontend)
+
+Pasang semua kebutuhan aset visual:
+
+```bash
+npm install
+```
+
+### 6. Menghidupkan Mesin
+
+Nyalakan server pengembangan Anda:
+
+```bash
+php artisan serve
+```
+
+---
+
+## 🌐 Akses Aplikasi
+
+Setelah mesin menyala, Monetra siap dijelajahi:
+
+-   **URL Utama:** [http://localhost:8000/](http://localhost:8000/)
+-   **Pintu Masuk (Login):** [http://localhost:8000/login](http://localhost:8000/login)
+
+Gunakan kredensial dari tabel hasil _seeding_ di atas untuk mulai bereksplorasi. Selamat mencoba! 🚀
