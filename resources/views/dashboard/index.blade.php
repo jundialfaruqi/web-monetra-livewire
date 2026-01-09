@@ -189,7 +189,7 @@
                         <span class="w-3 h-3 rounded-full bg-secondary"></span> Orders
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-primary"></span> Revenue
+                        <span class="w-3 h-3 rounded-full bg-base-300"></span> Revenue
                     </div>
                 </div>
             </div>
