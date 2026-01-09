@@ -13,6 +13,9 @@ Aplikasi ini ditenagai oleh kombinasi _tech stack_ mutakhir:
 -   **Spatie Laravel Permission:** ^6.24
 -   **Tailwind CSS:** ^4.0
 -   **Daisy UI:** ^5.5.14
+-   **Livewire:** ^3.7.3
+-   **Sanctum:** ^12.0
+-   **Scramble:** ^0.13.10
 
 ---
 
