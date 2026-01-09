@@ -29,6 +29,12 @@ class AuthController extends Controller
             ])->withInput();
         }
 
+        if ($user->status !== 'active') {
+            return Redirect::back()->withErrors([
+                'email' => 'Akun anda tidak aktif',
+            ])->withInput();
+        }
+
         Auth::login($user);
         Session::put('user_id', $user->id);
         $intended = session()->pull('intended_url', route('dashboard.index'));

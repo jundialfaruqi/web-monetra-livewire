@@ -217,7 +217,7 @@
             <div class="overflow-x-auto">
                 <table class="table table-zebra w-full">
                     <thead>
-                        <tr class="text-neutral">
+                        <tr>
                             <th class="text-center">#</th>
                             <th>Name</th>
                             <th>Guard</th>

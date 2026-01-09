@@ -210,7 +210,7 @@
                 <table class="table w-full">
                     <!-- head -->
                     <thead>
-                        <tr class="text-neutral">
+                        <tr>
                             <th class="text-center">#</th>
                             <th>User</th>
                             <th>Role</th>

@@ -38,7 +38,7 @@
                 </div>
 
                 @if ($errors->any())
-                    <div class="alert alert-error mb-4">
+                    <div class="alert alert-soft max-sm:alert-vertical alert-error text-xs font-bold mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -114,7 +114,7 @@
                             <span class="text-error text-xs mt-1">{{ $message }}</span>
                         @enderror
                         <label class="label justify-end mt-2">
-                            <a href="#" class="label-text-alt link link-hover text-neutral font-medium">
+                            <a href="#" class="label-text-alt link link-hover font-medium underline">
                                 Forgot password?
                             </a>
                         </label>
