@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Monetra' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        // Check theme preference before page load to avoid flash
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'night');
+        }
+    </script>
     @livewireStyles
     <style>
         /* Custom scrollbar for sidebar if needed */
@@ -43,6 +52,7 @@
     </div>
     @livewireScripts
     <script src="{{ asset('js/global-loading.js') }}"></script>
+    <script src="{{ asset('js/theme-toggle.js') }}"></script>
 </body>
 
 </html>

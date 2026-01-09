@@ -34,24 +34,24 @@
     @endif
 
     <div class="mb-6">
-        <div class="card bg-linear-to-r from-secondary to-neutral text-primary-content p-5">
+        <div class="card bg-linear-to-r from-secondary to-neutral text-base-100 p-5">
             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <div class="text-lg font-bold">Manajemen Akses</div>
-                    <div class="text-sm opacity-80">Data role dan permission</div>
+                    <div class="text-lg text-white font-bold">Manajemen Akses</div>
+                    <div class="text-sm text-white opacity-80">Data role dan permission</div>
                 </div>
                 <div class="flex flex-wrap gap-4 md:gap-0 mt-1 md:mt-0">
                     <div class="text-center">
-                        <div class="text-2xl font-bold">{{ $stats['roles'] ?? 0 }}</div>
-                        <div class="text-xs">Roles</div>
+                        <div class="text-2xl text-white font-bold">{{ $stats['roles'] ?? 0 }}</div>
+                        <div class="text-xs text-white opacity-80">Roles</div>
                     </div>
                     <div class="text-center md:pl-6 md:ml-6 md:border-l md:border-dotted md:border-white/40">
-                        <div class="text-2xl font-bold">{{ $stats['permissions'] ?? 0 }}</div>
-                        <div class="text-xs">Permissions</div>
+                        <div class="text-2xl text-white font-bold">{{ $stats['permissions'] ?? 0 }}</div>
+                        <div class="text-xs text-white opacity-80">Permissions</div>
                     </div>
                     <div class="text-center md:pl-6 md:ml-6 md:border-l md:border-dotted md:border-white/40">
-                        <div class="text-2xl font-bold">{{ $stats['new_permissions'] ?? 0 }}</div>
-                        <div class="text-xs">Permission Baru</div>
+                        <div class="text-2xl text-white font-bold">{{ $stats['new_permissions'] ?? 0 }}</div>
+                        <div class="text-xs text-white opacity-80">Permission Baru</div>
                     </div>
                 </div>
             </div>

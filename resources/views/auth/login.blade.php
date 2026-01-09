@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Monetra Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'night');
+        }
+    </script>
 </head>
 
 <body class="bg-base-200 min-h-screen flex items-center justify-center font-sans text-base-content">
