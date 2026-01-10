@@ -13,6 +13,12 @@
                 setTimeout(() => this.showError = false, 5000);
             }
         });
+
+        this.$wire.on('refresh-page', () => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000); // Wait 1 second so user can see the success toast
+        });
     }
 }">
     <!-- Success Toast -->
@@ -116,8 +122,7 @@
                     <div x-show="previewUrl && !isRemoved" x-cloak
                         class="absolute inset-0 flex flex-col items-center justify-center bg-base-100 rounded-xl p-4 z-20">
                         <div class="avatar mb-4">
-                            <div
-                                class="w-24 h-24 rounded-lg flex items-center justify-center bg-base-200 overflow-hidden">
+                            <div class="w-24 h-24 rounded-lg flex items-center justify-center bg-white overflow-hidden">
                                 <img :src="previewUrl" alt="Preview" class="object-contain w-full h-full">
                             </div>
                         </div>

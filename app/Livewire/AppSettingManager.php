@@ -74,6 +74,9 @@ class AppSettingManager extends Component
                 message: 'Pengaturan aplikasi berhasil diperbarui!',
                 type: 'success'
             );
+
+            // Trigger reload after a short delay to allow toast to be seen
+            $this->dispatch('refresh-page');
         } catch (\Illuminate\Validation\ValidationException $e) {
             throw $e;
         } catch (\Exception $e) {

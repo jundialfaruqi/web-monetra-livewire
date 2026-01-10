@@ -4,12 +4,16 @@
         <!-- Logo -->
         <div class="h-16 flex items-center px-6 border-b border-base-200 shrink-0">
             <div class="flex items-center gap-2 text-secondary font-bold text-2xl">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-                    <path fill-rule="evenodd"
-                        d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
-                        clip-rule="evenodd" />
-                </svg>
-                <span>Monetra</span>
+                @if ($appSetting && $appSetting->app_logo)
+                    <img src="{{ $appSetting->app_logo_url }}" class="w-8 h-8 object-contain" alt="Logo">
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                        <path fill-rule="evenodd"
+                            d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
+                            clip-rule="evenodd" />
+                    </svg>
+                @endif
+                <span>{{ $appSetting->app_name ?? config('app.name') }}</span>
             </div>
         </div>
 
@@ -139,8 +143,8 @@
                 </li>
                 <li>
                     <a>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
                         </svg>
@@ -179,7 +183,8 @@
             <div class="flex items-center gap-3">
                 <div class="avatar">
                     <div class="w-10 rounded-full">
-                        <img src="{{ auth()->user()->photo_url ?? 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp' }}" />
+                        <img
+                            src="{{ auth()->user()->photo_url ?? 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp' }}" />
                     </div>
                 </div>
                 <div class="flex-1 min-w-0">

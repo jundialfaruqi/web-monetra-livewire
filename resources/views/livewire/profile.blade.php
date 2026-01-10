@@ -38,7 +38,13 @@
         </div>
     @endif
 
-    <div class="space-y-6" x-data="{ activeTab: 'profile' }">
+    <div class="space-y-6" x-data="{
+        activeTab: localStorage.getItem('profile_active_tab') || 'profile',
+        switchTab(tab) {
+            this.activeTab = tab;
+            localStorage.setItem('profile_active_tab', tab);
+        }
+    }">
         <!-- Profile Header Section -->
         <div class="card bg-base-100 shadow overflow-hidden border border-base-200">
             <!-- Banner -->
@@ -138,7 +144,7 @@
             <!-- Tabs Navigation -->
             <div class="px-6 border-t border-base-200">
                 <div role="tablist" class="tabs tabs-bordered overflow-x-auto no-scrollbar py-2">
-                    <a role="tab" @click="activeTab = 'profile'"
+                    <a role="tab" @click="switchTab('profile')"
                         :class="{ 'tab-active': activeTab === 'profile' }"
                         class="tab font-medium flex items-center gap-2 whitespace-nowrap">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -149,7 +155,7 @@
                         Profile
                     </a>
                     @can('setting-app')
-                        <a role="tab" @click="activeTab = 'settings'"
+                        <a role="tab" @click="switchTab('settings')"
                             :class="{ 'tab-active': activeTab === 'settings' }"
                             class="tab font-medium flex items-center gap-2 whitespace-nowrap">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

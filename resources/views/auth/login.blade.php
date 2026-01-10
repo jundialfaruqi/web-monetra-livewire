@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Monetra Dashboard</title>
+    <title>Login Admin - {{ $appSetting->app_name ?? config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         const savedTheme = localStorage.getItem('theme');
@@ -15,10 +15,6 @@
         }
     </script>
 </head>
-
-@php
-    $appSetting = \App\Models\AppSetting::find(1);
-@endphp
 
 <body class="bg-base-200 min-h-screen flex items-center justify-center font-sans text-base-content">
     <div class="w-full max-w-sm p-6">
