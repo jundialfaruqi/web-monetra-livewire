@@ -200,8 +200,9 @@
                     </label>
                     <ul tabindex="0"
                         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-40 border border-base-200">
-                        <li>
-                            <a class="cursor-default">
+                        <li class="{{ request()->routeIs('profile') ? 'bg-primary/10 rounded-lg' : '' }}">
+                            <a href="{{ route('profile') }}"
+                                class="{{ request()->routeIs('profile') ? 'text-primary font-medium' : '' }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
