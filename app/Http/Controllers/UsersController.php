@@ -74,6 +74,7 @@ class UsersController extends Controller
             'status' => ['nullable', 'in:active,pending,inactive'],
             'role' => ['nullable', 'string'],
             'photo' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:800'],
+            'remove_photo' => ['nullable', 'string', 'in:0,1'],
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:255'],
         ]);

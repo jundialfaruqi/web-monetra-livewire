@@ -40,6 +40,12 @@ class DatabaseSeeder extends Seeder
                 'edit-permission',
                 'delete-permission',
             ],
+            'example' => [
+                'view-example',
+                'add-example',
+                'edit-example',
+                'delete-example',
+            ],
         ];
 
         foreach ($permissions as $group => $permissionList) {
@@ -72,6 +78,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'user',
             'guard_name' => 'web',
             'color' => '#2bff00'
+        ]);
+        $userExampleRole = Role::updateOrCreate([
+            'name' => 'user-example',
+            'guard_name' => 'web',
+            'color' => '#ff00dd'
         ]);
         $this->command->info('✔ Roles created successfully.');
 
@@ -119,6 +130,17 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
                 'role' => 'user',
                 'role_obj' => $userRole
+            ],
+            [
+                'email' => 'user@example.com',
+                'name' => 'User Example',
+                'password' => 'string',
+                'status' => 'active',
+                'phone' => '+6281234567893',
+                'address' => 'Jl. Example No. 3',
+                'email_verified_at' => now(),
+                'role' => 'user-example',
+                'role_obj' => $userExampleRole
             ]
         ];
 

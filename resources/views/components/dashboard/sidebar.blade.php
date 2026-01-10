@@ -179,11 +179,7 @@
             <div class="flex items-center gap-3">
                 <div class="avatar">
                     <div class="w-10 rounded-full">
-                        @if (auth()->user()->photo)
-                            <img src="{{ auth()->user()->photo }}" />
-                        @else
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                        @endif
+                        <img src="{{ auth()->user()->photo_url ?? 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp' }}" />
                     </div>
                 </div>
                 <div class="flex-1 min-w-0">

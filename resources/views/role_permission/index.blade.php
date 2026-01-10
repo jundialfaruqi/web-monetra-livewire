@@ -484,7 +484,7 @@
                     <div class="form-control md:col-span-2">
                         <label class="label mb-2"><span class="label-text">Permissions</span></label>
                         <p class="text-xs text-base-content/60">Pilih semua permission/izin yang diperlukan</p>
-                        <div class="max-h-83 overflow-auto py-3 px-1">
+                        <div class="max-h-85 overflow-auto py-3 px-1">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 @foreach (($allPermissions ?? collect())->groupBy('group') as $groupName => $groupList)
                                     <div class="card p-3 border border-base-content/15">

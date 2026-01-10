@@ -103,6 +103,15 @@ class UsersService
         if (!empty($data['role'])) {
             $user->syncRoles([$data['role']]);
         }
+
+        // Handle Photo Removal
+        if (isset($data['remove_photo']) && $data['remove_photo'] == '1') {
+            if ($user->photo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->photo);
+                $user->photo = null;
+            }
+        }
+
         if ($photo) {
             if ($user->photo) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($user->photo);

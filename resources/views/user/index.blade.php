@@ -241,8 +241,8 @@
                                     <div class="flex items-center gap-3">
                                         <div class="avatar">
                                             <div class="mask mask-squircle w-10 h-10">
-                                                @php $photoUrl = $user->photo ? asset('storage/' . $user->photo) : 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'; @endphp
-                                                <img src="{{ $photoUrl }}" alt="Avatar" />
+                                                <img src="{{ $user->photo_url ?? 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp' }}"
+                                                    alt="Avatar" />
                                             </div>
                                         </div>
                                         <div>

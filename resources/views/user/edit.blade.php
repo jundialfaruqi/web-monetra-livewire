@@ -36,25 +36,25 @@
                             <div class="mt-1 text-xs text-error">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div>
-                        <label class="label"><span class="label-text mb-2">Password (biarkan kosong jika tidak
-                                diganti)</span></label>
+                    <div x-data="{ showPassword: false }">
+                        <label class="label"><span class="label-text mb-2">Password (kosongkan jika tidak ingin
+                                diubah)</span></label>
                         <div class="relative">
-                            <input name="password" id="password-input" type="password"
-                                class="input input-bordered w-full pr-10" minlength="6">
-                            <button type="button" id="password-toggle"
-                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-base-content/60 hover:text-primary transition-colors">
-                                <!-- Eye Icon -->
-                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            <input name="password" :type="showPassword ? 'text' : 'password'"
+                                class="input input-bordered w-full pr-12" minlength="6" placeholder="••••">
+                            <button type="button" @click="showPassword = !showPassword"
+                                class="absolute right-0 top-0 h-full px-4 text-base-content/50 hover:text-base-content transition-colors">
+                                <!-- Eye Icon (Show) -->
+                                <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
-                                <!-- Eye Slash Icon -->
-                                <svg id="eye-slash-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 hidden">
+                                <!-- Eye Slash Icon (Hide) -->
+                                <svg x-show="showPassword" x-cloak xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                 </svg>
@@ -105,28 +105,102 @@
                         @enderror
                     </div>
                 </div>
-                <div>
+                <div x-data="{
+                    previewUrl: '{{ $user->photo_url }}',
+                    isRemoved: false,
+                    isOver: false,
+                    errorTitle: '',
+                    errorMessage: '',
+                    showError: false,
+                    handleFile(e) {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                
+                        const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+                        if (!allowed.includes(file.type)) {
+                            this.errorTitle = 'Format File Salah';
+                            this.errorMessage = 'Silakan pilih gambar dengan format JPG, PNG, atau WEBP.';
+                            this.showError = true;
+                            e.target.value = '';
+                            return;
+                        }
+                        if (file.size > 800 * 1024) {
+                            this.errorTitle = 'Ukuran Gambar Terlalu Besar';
+                            this.errorMessage = 'Maksimal ukuran gambar yang diperbolehkan adalah 800KB.';
+                            this.showError = true;
+                            e.target.value = '';
+                            return;
+                        }
+                
+                        this.previewUrl = URL.createObjectURL(file);
+                        this.isRemoved = false;
+                    },
+                    removePhoto() {
+                        this.previewUrl = null;
+                        this.isRemoved = true;
+                        document.getElementById('photo-input').value = '';
+                    }
+                }">
+                    <!-- Error Modal -->
+                    <template x-teleport="body">
+                        <div x-show="showError" x-cloak class="modal modal-open">
+                            <div class="modal-box border-t-4 border-error">
+                                <div class="flex items-center gap-3 text-error mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="2" stroke="currentColor" class="w-8 h-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                    </svg>
+                                    <h3 class="font-bold text-lg" x-text="errorTitle"></h3>
+                                </div>
+                                <p class="text-base-content/70" x-text="errorMessage"></p>
+                                <div class="modal-action">
+                                    <button type="button" class="btn btn-error"
+                                        @click="showError = false">Tutup</button>
+                                </div>
+                            </div>
+                            <div class="modal-backdrop bg-black/40" @click="showError = false"></div>
+                        </div>
+                    </template>
+
                     <label class="label"><span class="label-text mb-2">Photo (jpg, jpeg, png, webp; max
                             800KB)</span></label>
                     <div id="dropzone"
-                        class="relative rounded-lg border-dashed border-2 border-base-300 bg-base-200/50 p-4 cursor-pointer min-h-36">
-                        <input id="photo-input" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp"
-                            class="hidden">
-                        <div id="placeholder"
-                            class="flex flex-col items-center justify-center gap-3 text-base-content/60 {{ $user->photo ? 'hidden' : '' }}">
+                        class="relative rounded-lg border-dashed border-2 p-6 min-h-45 transition-colors group"
+                        :class="isOver ? 'border-primary bg-primary/5' : 'border-base-300 bg-base-200/50'"
+                        @dragover.prevent="isOver = true" @dragleave.prevent="isOver = false"
+                        @drop.prevent="isOver = false; $refs.photoInput.files = $event.dataTransfer.files; handleFile({target: $refs.photoInput})">
+
+                        <input type="hidden" name="remove_photo" :value="isRemoved ? '1' : '0'">
+                        <input id="photo-input" x-ref="photoInput" name="photo" type="file"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" @change="handleFile">
+
+                        <!-- Preview -->
+                        <div x-show="previewUrl && !isRemoved" x-cloak
+                            class="absolute inset-0 flex flex-col items-center justify-center bg-base-100 rounded-lg p-4">
+                            <div class="avatar mb-3 mt-4">
+                                <div class="mask mask-squircle w-24 h-24">
+                                    <img :src="previewUrl" alt="Preview">
+                                </div>
+                            </div>
+                            <!-- Delete Button -->
+                            <button type="button" @click.stop="removePhoto"
+                                class="btn btn-error btn-outline btn-xs gap-2 z-20 mb-4" title="Hapus foto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                                <span>Hapus Foto</span>
+                            </button>
+                        </div>
+
+                        <!-- Placeholder -->
+                        <div x-show="!previewUrl || isRemoved"
+                            class="flex flex-col items-center justify-center gap-3 text-base-content/60">
                             <img src="{{ asset('assets/images/illustrations/undraw_upload_cucu.svg') }}"
                                 alt="Upload illustration" class="w-24 h-24">
                             <span>Drag & drop atau klik untuk pilih gambar</span>
-                        </div>
-                        <div id="preview"
-                            class="absolute inset-0 {{ $user->photo ? 'flex' : 'hidden' }} items-center justify-center">
-                            <div class="avatar">
-                                <div class="mask mask-squircle w-24 h-24">
-                                    <img id="preview-img"
-                                        src="{{ $user->photo ? asset('storage/' . $user->photo) : '' }}"
-                                        alt="Preview">
-                                </div>
-                            </div>
                         </div>
                     </div>
                     @error('photo')
@@ -144,5 +218,4 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/user-form.js') }}"></script>
 </x-layout>
