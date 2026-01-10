@@ -154,6 +154,7 @@ class DatabaseSeeder extends Seeder
             $roleObj = $data['role_obj'];
             $roleName = $data['role'];
             $plainPassword = $data['password'];
+            $status = $data['status'];
 
             unset($data['role'], $data['role_obj']);
 
@@ -163,10 +164,10 @@ class DatabaseSeeder extends Seeder
             $user = User::updateOrCreate(['email' => $data['email']], $data);
             $user->assignRole($roleObj);
 
-            $displayUsers[] = [$user->name, $user->email, $plainPassword, $roleName];
+            $displayUsers[] = [$user->name, $user->email, $plainPassword, $roleName, $status];
         }
 
-        $this->command->table(['Name', 'Email', 'Password', 'Role'], $displayUsers);
+        $this->command->table(['Name', 'Email', 'Password', 'Role', 'Status'], $displayUsers);
 
         $this->command->newLine();
         $this->command->info('✨ Database Seeding Completed Successfully! ✨');

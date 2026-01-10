@@ -39,11 +39,12 @@
 
                 @if ($errors->any())
                     <div class="alert alert-soft max-sm:alert-vertical alert-error text-xs font-bold mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M12 9v4m0 4h.01M10.34 2.63a2 2 0 0 1 3.32 0l8.54 13.66A2 2 0 0 1 20.54 19H3.46a2 2 0 0 1-1.66-2.71l8.54-13.66z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+                                clip-rule="evenodd" />
                         </svg>
+
                         <span class="text-sm">{{ $errors->first() }}</span>
                     </div>
                 @endif

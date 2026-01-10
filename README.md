@@ -71,15 +71,17 @@ Step 2: Creating Roles...
 
 Step 3: Syncing Permissions...
 ✔ All permissions synced to Super Admin.
+✔ Example permissions synced to User Example Role.
 
 Step 4: Creating Users & Assigning Roles...
-+--------------+----------------------+----------+-------------+
-| Name         | Email                | Password | Role        |
-+--------------+----------------------+----------+-------------+
-| Super Admin  | superadmin@mail.com  | password | super-admin |
-| Admin        | admin@mail.com       | password | admin       |
-| Regular User | user@mail.com        | password | user        |
-+--------------+----------------------+----------+-------------+
++--------------+----------------------+----------+--------------+--------+
+| Name         | Email                | Password | Role         | Status |
++--------------+----------------------+----------+--------------+--------+
+| Super Admin  | superadmin@mail.com  | password | super-admin  | active |
+| Admin        | admin@mail.com       | password | admin        | active |
+| Regular User | user@mail.com        | password | user         | active |
+| User Example | user@example.com     | string   | user-example | active |
++--------------+----------------------+----------+--------------+--------+
 
 ✨ Database Seeding Completed Successfully! ✨
 ```
@@ -108,5 +110,37 @@ Setelah mesin menyala, Monetra siap dijelajahi:
 
 -   **URL Utama:** [http://localhost:8000/](http://localhost:8000/)
 -   **Pintu Masuk (Login):** [http://localhost:8000/login](http://localhost:8000/login)
+
+---
+
+## 🔐 API Documentation (Sanctum)
+
+Monetra juga dilengkapi dengan API Auth yang siap digunakan untuk integrasi aplikasi pihak ketiga atau mobile:
+
+### 📖 Dokumentasi Interaktif
+
+Anda dapat mengakses dokumentasi API yang dihasilkan secara otomatis oleh **Scramble** di:
+
+-   **API Docs:** [http://localhost:8000/docs/api](http://localhost:8000/docs/api)
+
+### 🚀 Endpoint Utama
+
++--------+---------------+--------------------------------+----------+
+| Method | Endpoint | Keterangan | Proteksi |
+| :----- | :------------ | :----------------------------- | :------- |
+| `POST` | `/api/login` | Login & dapatkan Bearer Token | Public |
+| `GET` | `/api/me` | Ambil detail profil user aktif | Sanctum |
+| `POST` | `/api/logout` | Revoke token & logout | Sanctum |
++--------+---------------+--------------------------------+----------+
+
+### 🔑 Cara Penggunaan (Bearer Token)
+
+Setelah mendapatkan `token` dari endpoint login, sertakan token tersebut pada header setiap request yang membutuhkan proteksi:
+
+```http
+Authorization: Bearer {your_token_here}
+```
+
+---
 
 Gunakan kredensial dari tabel hasil _seeding_ di atas untuk mulai bereksplorasi. Selamat mencoba! 🚀
