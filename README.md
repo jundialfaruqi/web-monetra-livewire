@@ -125,13 +125,11 @@ Anda dapat mengakses dokumentasi API yang dihasilkan secara otomatis oleh **Scra
 
 ### 🚀 Endpoint Utama
 
-+--------+---------------+--------------------------------+----------+
-| Method | Endpoint | Keterangan | Proteksi |
+| Method | Endpoint      | Keterangan                     | Proteksi |
 | :----- | :------------ | :----------------------------- | :------- |
-| `POST` | `/api/login` | Login & dapatkan Bearer Token | Public |
-| `GET` | `/api/me` | Ambil detail profil user aktif | Sanctum |
-| `POST` | `/api/logout` | Revoke token & logout | Sanctum |
-+--------+---------------+--------------------------------+----------+
+| `POST` | `/api/login`  | Login & dapatkan Bearer Token  | Public   |
+| `GET`  | `/api/me`     | Ambil detail profil user aktif | Sanctum  |
+| `POST` | `/api/logout` | Revoke token & logout          | Sanctum  |
 
 ### 🔑 Cara Penggunaan (Bearer Token)
 
