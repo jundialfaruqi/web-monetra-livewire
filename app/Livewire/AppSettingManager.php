@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\AppSetting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class AppSettingManager extends Component
 {
@@ -21,6 +22,8 @@ class AppSettingManager extends Component
 
     public function mount()
     {
+        Gate::authorize('setting-app');
+
         $setting = AppSetting::first();
         if ($setting) {
             $this->app_name = $setting->app_name;
@@ -32,6 +35,8 @@ class AppSettingManager extends Component
 
     public function updateSettings()
     {
+        Gate::authorize('setting-app');
+
         try {
             $this->validate([
                 'app_name' => 'required|string|max:255',

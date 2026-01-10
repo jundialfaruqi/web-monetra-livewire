@@ -350,8 +350,8 @@
             <button>close</button>
         </form>
     </dialog>
-    <dialog id="filter-modal" class="modal">
-        <div class="modal-box">
+    <dialog id="filter-modal" class="modal backdrop-blur-xs">
+        <div class="modal-box shadow">
             <h3 class="font-bold text-lg mb-4">Filter Users</h3>
             <form method="GET" action="{{ route('users.index') }}" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

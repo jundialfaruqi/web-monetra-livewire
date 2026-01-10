@@ -416,7 +416,8 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div class="form-control">
-                                    <label class="label"><span class="label-text font-semibold">Name</span></label>
+                                    <label class="label"><span
+                                            class="label-text font-semibold mb-1">Name</span></label>
                                     <input wire:model="name" type="text"
                                         class="input input-bordered w-full focus:input-primary transition-all">
                                     @error('name')
@@ -424,7 +425,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-control">
-                                    <label class="label"><span class="label-text font-semibold">Email</span></label>
+                                    <label class="label"><span
+                                            class="label-text font-semibold mb-1">Email</span></label>
                                     <input wire:model="email" type="email"
                                         class="input input-bordered w-full focus:input-primary transition-all">
                                     @error('email')
@@ -433,7 +435,7 @@
                                 </div>
                                 <div class="form-control" x-data="{ showPassword: false }">
                                     <label class="label"><span
-                                            class="label-text font-semibold">Password</span></label>
+                                            class="label-text font-semibold mb-1">Password</span></label>
                                     <div class="relative">
                                         <input wire:model="password" :type="showPassword ? 'text' : 'password'"
                                             class="input input-bordered w-full pr-12 focus:input-primary transition-all"
@@ -463,7 +465,8 @@
                                     @enderror
                                 </div>
                                 <div class="form-control">
-                                    <label class="label"><span class="label-text font-semibold">Phone</span></label>
+                                    <label class="label"><span
+                                            class="label-text font-semibold mb-1">Phone</span></label>
                                     <input wire:model="phone" type="text"
                                         class="input input-bordered w-full focus:input-primary transition-all"
                                         placeholder="+62...">
@@ -473,7 +476,7 @@
                                 </div>
                                 <div class="md:col-span-2 form-control">
                                     <label class="label"><span
-                                            class="label-text font-semibold">Address</span></label>
+                                            class="label-text font-semibold mb-1">Address</span></label>
                                     <textarea wire:model="address" class="textarea textarea-bordered w-full focus:textarea-primary transition-all"
                                         rows="2" placeholder="Alamat lengkap..."></textarea>
                                     @error('address')

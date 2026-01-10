@@ -9,13 +9,16 @@ function initTheme() {
         html.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
 
-        // Update icons
+        // Update icons - Re-fetch icons to ensure we have the current DOM elements
+        const currentSunIcon = document.getElementById('sun-icon');
+        const currentMoonIcon = document.getElementById('moon-icon');
+
         if (theme === 'night') {
-            sunIcon?.classList.add('hidden');
-            moonIcon?.classList.remove('hidden');
+            currentSunIcon?.classList.add('hidden');
+            currentMoonIcon?.classList.remove('hidden');
         } else {
-            sunIcon?.classList.remove('hidden');
-            moonIcon?.classList.add('hidden');
+            currentSunIcon?.classList.remove('hidden');
+            currentMoonIcon?.classList.add('hidden');
         }
     }
 
@@ -47,7 +50,11 @@ function initTheme() {
 }
 
 // Support for standard page load
-document.addEventListener('DOMContentLoaded', initTheme);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+    initTheme();
+}
 
 // Support for Livewire wire:navigate
 document.addEventListener('livewire:navigated', initTheme);

@@ -27,13 +27,20 @@
     </div>
 
     <div class="flex items-center gap-2">
-        <!-- Country Flag (Placeholder) -->
-        <button class="btn btn-ghost btn-circle btn-sm">
-            <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA"
-                class="w-5 h-5 rounded-full object-cover">
+        <!-- Notifications -->
+        <button class="btn btn-base btn-circle btn-sm">
+            <div class="indicator">
+                <span class="indicator-item status status-primary"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                </svg>
+            </div>
         </button>
         <!-- Theme Toggle -->
-        <button id="theme-toggle" class="btn btn-ghost btn-circle btn-sm">
+        <button id="theme-toggle"
+            class="btn btn-circle btn-sm btn-secondary hover:bg-neutral hover:text-primary-content">
             <!-- Sun Icon -->
             <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-5 h-5">
@@ -47,24 +54,18 @@
                     d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
             </svg>
         </button>
-        <!-- Notifications -->
-        <button class="btn btn-ghost btn-circle btn-sm">
-            <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                </svg>
-                <span class="badge badge-xs badge-error indicator-item"></span>
-            </div>
-        </button>
-        <!-- User Avatar -->
-        <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                <div class="w-9 rounded-full">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                </div>
-            </label>
+
+        <!-- Divider -->
+        <div class="hidden md:block h-8 border-l border-dotted border-base-content/20"></div>
+
+        <!-- Date and Time -->
+        <div class="hidden md:flex flex-col items-start leading-tight">
+            <span class="text-xs font-bold text-base-content/80">
+                {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->locale('id')->isoFormat('dddd') }}
+            </span>
+            <span class="text-[10px] text-base-content/50">
+                {{ \Carbon\Carbon::now()->timezone('Asia/Jakarta')->locale('id')->isoFormat('D MMMM YYYY') }}
+            </span>
         </div>
     </div>
 </header>

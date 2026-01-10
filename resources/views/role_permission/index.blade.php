@@ -387,7 +387,7 @@
         </div>
     </div>
 
-    <dialog id="permission-modal" class="modal glass backdrop-blur-xs">
+    <dialog id="permission-modal" class="modal backdrop-blur-xs">
         <div class="modal-box shadow">
             <h3 class="font-bold text-lg mb-4">Permission</h3>
             <form id="permission-form" method="POST" action="{{ route('permissions.store') }}" data-loading>
@@ -444,7 +444,7 @@
         </div>
     </dialog>
 
-    <dialog id="role-modal" class="modal glass backdrop-blur-xs">
+    <dialog id="role-modal" class="modal backdrop-blur-xs">
         <div class="modal-box shadow">
             <h3 class="font-bold text-lg mb-4">Role</h3>
             <form id="role-form" method="POST" action="{{ route('roles.store') }}" data-loading>
