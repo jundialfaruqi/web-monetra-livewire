@@ -88,7 +88,7 @@ class UsersService
         return $user;
     }
 
-    public function updateUser(User $user, array $data, ?\Illuminate\Http\UploadedFile $photo = null): User
+    public function updateUser(User $user, array $data, ?\Illuminate\Http\UploadedFile $photo = null, ?\Illuminate\Http\UploadedFile $banner = null): User
     {
         $user->name = $data['name'];
         $user->email = $data['email'];
@@ -119,8 +119,40 @@ class UsersService
             $path = $this->processAndStorePhoto($photo);
             $user->photo = $path;
         }
+
+        // Handle Banner Removal
+        if (isset($data['remove_banner']) && $data['remove_banner'] == '1') {
+            if ($user->banner) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->banner);
+                $user->banner = null;
+            }
+        }
+
+        if ($banner) {
+            if ($user->banner) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->banner);
+            }
+            $path = $this->processAndStoreBanner($banner);
+            $user->banner = $path;
+        }
+
         $user->save();
         return $user;
+    }
+
+    protected function processAndStoreBanner(\Illuminate\Http\UploadedFile $file): string
+    {
+        $ext = strtolower($file->getClientOriginalExtension());
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+        if (!in_array($ext, $allowed, true)) {
+            throw new \InvalidArgumentException('Format gambar tidak didukung.');
+        }
+        
+        // Banners usually have different aspect ratios, so we might not want to crop it square like avatars
+        // But for consistency, let's just store it. We can resize it if needed.
+        $filename = \Illuminate\Support\Str::uuid()->toString() . '.' . $ext;
+        $path = $file->storeAs('banners', $filename, 'public');
+        return $path;
     }
 
     protected function processAndStorePhoto(\Illuminate\Http\UploadedFile $file): string

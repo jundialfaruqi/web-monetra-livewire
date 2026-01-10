@@ -23,6 +23,9 @@ class Profile extends Component
     public $photo;
     public $current_photo_url;
     public $remove_photo = false;
+    public $banner;
+    public $current_banner_url;
+    public $remove_banner = false;
     public $joined_at;
     public $roles;
 
@@ -35,6 +38,7 @@ class Profile extends Component
         $this->phone = $user->phone;
         $this->address = $user->address;
         $this->current_photo_url = $user->photo_url;
+        $this->current_banner_url = $user->banner_url;
         $this->joined_at = $user->created_at->format('F Y');
         $this->roles = $user->getRoleNames()->implode(', ');
     }
@@ -51,6 +55,7 @@ class Profile extends Component
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string', 'max:255'],
             'photo' => ['nullable', 'image', 'max:800'],
+            'banner' => ['nullable', 'image', 'max:2048'],
         ]);
 
         try {
@@ -61,14 +66,18 @@ class Profile extends Component
                 'phone' => $this->phone,
                 'address' => $this->address,
                 'remove_photo' => $this->remove_photo ? '1' : '0',
+                'remove_banner' => $this->remove_banner ? '1' : '0',
             ];
 
-            $service->updateUser($user, $updateData, $this->photo);
+            $service->updateUser($user, $updateData, $this->photo, $this->banner);
 
             $this->password = null;
             $this->photo = null;
+            $this->banner = null;
             $this->current_photo_url = $user->fresh()->photo_url;
+            $this->current_banner_url = $user->fresh()->banner_url;
             $this->remove_photo = false;
+            $this->remove_banner = false;
 
             session()->flash('success', 'Profil berhasil diperbarui');
             return redirect()->route('profile');

@@ -42,8 +42,27 @@
         <!-- Profile Header Section -->
         <div class="card bg-base-100 shadow overflow-hidden border border-base-200">
             <!-- Banner -->
-            <div class="h-48 md:h-50 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 relative">
-                <div class="absolute inset-0 bg-black/10"></div>
+            <div class="h-48 md:h-50 relative group">
+                @if ($banner)
+                    <img src="{{ $banner->temporaryUrl() }}" class="w-full h-full object-cover" alt="Banner Preview">
+                @elseif($current_banner_url && !$remove_banner)
+                    <img src="{{ $current_banner_url }}" class="w-full h-full object-cover" alt="Banner">
+                @else
+                    <div class="w-full h-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                @endif
+                <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
+
+                <!-- Banner Action Button -->
+                <button type="button" @click="document.getElementById('banner-input').click()"
+                    class="absolute bottom-4 right-4 btn btn-circle btn-sm btn-primary border-white/20 shadow-lg opacity-0 group-hover:opacity-100 transition-all hover:scale-110 active:scale-95 z-30">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Profile Info Overlap -->
@@ -120,8 +139,8 @@
             <div class="px-6 border-t border-base-200">
                 <div role="tablist" class="tabs tabs-bordered overflow-x-auto no-scrollbar py-2">
                     <a role="tab" class="tab tab-active font-medium flex items-center gap-2 whitespace-nowrap">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-4 h-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>
@@ -129,8 +148,8 @@
                     </a>
                     <a role="tab"
                         class="tab font-medium flex items-center gap-2 whitespace-nowrap opacity-50 cursor-not-allowed">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-4 h-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                         </svg>
@@ -303,6 +322,76 @@
                                 @enderror
                             </div>
 
+                            <!-- Banner Upload Section -->
+                            <div x-data="{
+                                previewUrl: '{{ $current_banner_url }}',
+                                isRemoved: @entangle('remove_banner'),
+                                isOver: false,
+                                handleFile(e) {
+                                    const file = e.target.files[0];
+                                    if (!file) return;
+                                    if (file.size > 2048 * 1024) {
+                                        alert('Ukuran file maksimal 2MB');
+                                        return;
+                                    }
+                                    this.previewUrl = URL.createObjectURL(file);
+                                    this.isRemoved = false;
+                                }
+                            }" class="space-y-3">
+                                <label class="label p-0"><span class="label-text font-semibold">Profile
+                                        Banner</span></label>
+                                <div class="relative rounded-xl border-dashed border-2 p-4 min-h-32 transition-all group flex flex-col items-center justify-center text-center overflow-hidden"
+                                    :class="isOver ? 'border-primary bg-primary/5 scale-[0.99]' :
+                                        'border-base-300 bg-base-50 hover:bg-base-100'"
+                                    @dragover.prevent="isOver = true" @dragleave.prevent="isOver = false"
+                                    @drop.prevent="isOver = false; $refs.bannerInput.files = $event.dataTransfer.files; handleFile({target: $refs.bannerInput})">
+
+                                    <input id="banner-input" x-ref="bannerInput" wire:model="banner" type="file"
+                                        accept=".jpg,.jpeg,.png,.webp"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                        @change="handleFile">
+
+                                    <!-- Preview Overlay -->
+                                    <div x-show="previewUrl && !isRemoved" x-cloak
+                                        class="absolute inset-0 flex flex-col items-center justify-center bg-base-100 z-20">
+                                        <img :src="previewUrl"
+                                            class="absolute inset-0 w-full h-full object-cover opacity-50">
+                                        <div class="relative z-30">
+                                            <button type="button"
+                                                @click.stop="isRemoved = true; previewUrl = null; $wire.set('banner', null)"
+                                                class="btn btn-error btn-outline btn-sm gap-2 glass">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                                    class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                                Hapus Banner
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Placeholder -->
+                                    <div
+                                        class="flex flex-col items-center gap-2 text-base-content/40 group-hover:text-primary transition-colors">
+                                        <div
+                                            class="w-12 h-12 rounded-full bg-base-200 flex items-center justify-center mb-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                            </svg>
+                                        </div>
+                                        <div class="text-sm font-medium">Klik atau tarik banner ke sini</div>
+                                        <div class="text-xs">Rekomendasi 1200x400px (Maks. 2MB)</div>
+                                    </div>
+                                </div>
+                                @error('banner')
+                                    <div class="mt-1 text-xs text-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div class="form-control">
                                     <label class="label"><span class="label-text font-semibold">Name</span></label>
@@ -409,7 +498,7 @@
                             <div
                                 class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
                                 <div
-                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-primary text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-secondary text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                                     <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
                                 </div>
                                 <div
@@ -427,7 +516,7 @@
                             <div
                                 class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                                 <div
-                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-base-200 text-base-content/30 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                                    class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-success shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="2" stroke="currentColor" class="w-4 h-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"

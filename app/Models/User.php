@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'status',
         'photo',
+        'banner',
         'phone',
         'address'
     ];
@@ -46,6 +47,7 @@ class User extends Authenticatable
      */
     protected $appends = [
         'photo_url',
+        'banner_url',
     ];
 
     /**
@@ -75,5 +77,21 @@ class User extends Authenticatable
         }
 
         return url(\Illuminate\Support\Facades\Storage::url($this->photo));
+    }
+
+    /**
+     * Get the user's banner URL.
+     */
+    public function getBannerUrlAttribute(): ?string
+    {
+        if (!$this->banner) {
+            return null;
+        }
+
+        if (filter_var($this->banner, FILTER_VALIDATE_URL)) {
+            return $this->banner;
+        }
+
+        return url(\Illuminate\Support\Facades\Storage::url($this->banner));
     }
 }
