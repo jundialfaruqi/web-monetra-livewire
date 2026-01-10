@@ -106,11 +106,11 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'status' => $user->status,
-                'photo' => $user->photo,
                 'phone' => $user->phone,
                 'address' => $user->address,
                 'role' => $user->getRoleNames()->first(),
                 'permissions' => $user->getAllPermissions()->pluck('name')->toArray(),
+                'photo' => $user->photo,
                 'photo_url' => $user->photo_url,
             ]
         ]);

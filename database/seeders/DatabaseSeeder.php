@@ -93,6 +93,11 @@ class DatabaseSeeder extends Seeder
         $superAdminRole->syncPermissions($allPermissions);
         $this->command->info('✔ All permissions synced to Super Admin.');
 
+        // Sync example permissions to User Example Role
+        $examplePermissions = Permission::where('group', 'example')->get();
+        $userExampleRole->syncPermissions($examplePermissions);
+        $this->command->info('✔ Example permissions synced to User Example Role.');
+
         // 4. Create Users and Assign Roles
         $this->command->newLine();
         $this->command->comment('Step 4: Creating Users & Assigning Roles...');
