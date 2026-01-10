@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\AppSetting;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -20,6 +25,36 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->newLine();
         $this->command->info('🚀 Starting Database Seeding...');
+        $this->command->newLine();
+
+        // 0. Pre-seeding checks and cleanup
+        $this->command->comment('Step 0: Pre-seeding Cleanup & Checks...');
+
+        // Check Storage Link
+        if (!File::exists(public_path('storage'))) {
+            $this->command->warn('! Storage link missing. Creating it now...');
+            $this->command->call('storage:link');
+            $this->command->info('✔ Storage link created.');
+        } else {
+            $this->command->info('✔ Storage link verified.');
+        }
+
+        // Clean Directories
+        $directoriesToClean = ['avatars', 'banners', 'logo'];
+        foreach ($directoriesToClean as $dir) {
+            if (Storage::disk('public')->exists($dir)) {
+                $files = Storage::disk('public')->allFiles($dir);
+                if (count($files) > 0) {
+                    Storage::disk('public')->delete($files);
+                    $this->command->info("✔ Cleaned {$dir} directory.");
+                } else {
+                    $this->command->info("✔ {$dir} directory is already clean.");
+                }
+            } else {
+                Storage::disk('public')->makeDirectory($dir);
+                $this->command->info("✔ Created {$dir} directory.");
+            }
+        }
         $this->command->newLine();
 
         // 1. Create Permissions
@@ -45,6 +80,9 @@ class DatabaseSeeder extends Seeder
                 'add-example',
                 'edit-example',
                 'delete-example',
+            ],
+            'setting' => [
+                'setting-app',
             ],
         ];
 
@@ -145,7 +183,11 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Example No. 3',
                 'email_verified_at' => now(),
                 'role' => 'user-example',
-                'role_obj' => $userExampleRole
+                'role_obj' => $userExampleRole,
+                'custom_files' => [
+                    'photo' => 'public/assets/images/avatars/avatar.png',
+                    'banner' => 'public/assets/images/banners/banner.jpg',
+                ]
             ]
         ];
 
@@ -155,11 +197,29 @@ class DatabaseSeeder extends Seeder
             $roleName = $data['role'];
             $plainPassword = $data['password'];
             $status = $data['status'];
+            $customFiles = $data['custom_files'] ?? null;
 
-            unset($data['role'], $data['role_obj']);
+            unset($data['role'], $data['role_obj'], $data['custom_files']);
 
             // Hash password for database
             $data['password'] = Hash::make($plainPassword);
+
+            // Handle Custom Files (Photo & Banner)
+            if ($customFiles) {
+                if (isset($customFiles['photo']) && File::exists(base_path($customFiles['photo']))) {
+                    $photoName = Str::uuid() . '.' . File::extension(base_path($customFiles['photo']));
+                    $photoPath = 'avatars/' . $photoName;
+                    Storage::disk('public')->put($photoPath, File::get(base_path($customFiles['photo'])));
+                    $data['photo'] = $photoPath;
+                }
+
+                if (isset($customFiles['banner']) && File::exists(base_path($customFiles['banner']))) {
+                    $bannerName = Str::uuid() . '.' . File::extension(base_path($customFiles['banner']));
+                    $bannerPath = 'banners/' . $bannerName;
+                    Storage::disk('public')->put($bannerPath, File::get(base_path($customFiles['banner'])));
+                    $data['banner'] = $bannerPath;
+                }
+            }
 
             $user = User::updateOrCreate(['email' => $data['email']], $data);
             $user->assignRole($roleObj);
@@ -172,5 +232,17 @@ class DatabaseSeeder extends Seeder
         $this->command->newLine();
         $this->command->info('✨ Database Seeding Completed Successfully! ✨');
         $this->command->newLine();
+
+        // 5. Initialize App Settings
+        $this->command->comment('Step 5: Initializing App Settings...');
+        AppSetting::updateOrCreate(
+            ['id' => 1],
+            [
+                'app_name' => config('app.name'),
+                'login_title' => 'Welcome Back',
+                'login_description' => 'Enter your credentials to access your account',
+            ]
+        );
+        $this->command->info('✔ App settings initialized.');
     }
 }

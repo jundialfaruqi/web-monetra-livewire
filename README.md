@@ -19,6 +19,17 @@ Aplikasi ini ditenagai oleh kombinasi _tech stack_ mutakhir:
 
 ---
 
+## ✨ Fitur Utama
+
+-   **Manajemen User & Role:** Kontrol penuh menggunakan Spatie Laravel Permission dengan UI yang intuitif.
+-   **Profil Dinamis:** Halaman profil modern dengan fitur upload foto profil dan banner secara real-time.
+-   **Pengaturan Aplikasi (App Settings):** Kustomisasi nama aplikasi, logo, serta judul dan deskripsi halaman login langsung dari dashboard (Tab Settings di Profil).
+-   **UI Modern & Responsif:** Dibangun dengan Tailwind CSS dan DaisyUI untuk pengalaman pengguna yang maksimal di berbagai perangkat.
+-   **Sistem Notifikasi Toast:** Feedback instan yang elegan untuk setiap aksi pengguna.
+-   **Automated Maintenance:** Pembersihan otomatis file storage lama dan pengecekan storage link yang terintegrasi dalam sistem seeder.
+
+---
+
 ## 🏗 Panduan Setup (Langkah demi Langkah)
 
 Ikuti perjalanan singkat ini untuk menghidupkan Monetra di mesin lokal Anda:
@@ -63,6 +74,12 @@ Saat proses selesai, Anda akan disambut dengan tabel informasi yang terlihat pro
 ```text
 🚀 Starting Database Seeding...
 
+Step 0: Pre-seeding Cleanup & Checks...
+✔ Storage link verified.
+✔ Cleaned avatars directory.
+✔ Cleaned banners directory.
+✔ logo directory is already clean.
+
 Step 1: Creating Permissions...
 ✔ Permissions created successfully.
 
@@ -74,16 +91,19 @@ Step 3: Syncing Permissions...
 ✔ Example permissions synced to User Example Role.
 
 Step 4: Creating Users & Assigning Roles...
-+--------------+----------------------+----------+--------------+--------+
-| Name         | Email                | Password | Role         | Status |
-+--------------+----------------------+----------+--------------+--------+
-| Super Admin  | superadmin@mail.com  | password | super-admin  | active |
-| Admin        | admin@mail.com       | password | admin        | active |
-| Regular User | user@mail.com        | password | user         | active |
-| User Example | user@example.com     | string   | user-example | active |
-+--------------+----------------------+----------+--------------+--------+
++--------------+---------------------+----------+--------------+--------+
+| Name         | Email               | Password | Role         | Status |
++--------------+---------------------+----------+--------------+--------+
+| Super Admin  | superadmin@mail.com | password | super-admin  | active |
+| Admin        | admin@mail.com      | password | admin        | active |
+| Regular User | user@mail.com       | password | user         | active |
+| User Example | user@example.com    | string   | user-example | active |
++--------------+---------------------+----------+--------------+--------+
 
 ✨ Database Seeding Completed Successfully! ✨
+
+Step 5: Initializing App Settings...
+✔ App settings initialized.
 ```
 
 ### 5. Mempercantik Tampilan (Frontend)

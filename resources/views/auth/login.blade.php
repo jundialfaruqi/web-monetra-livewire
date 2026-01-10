@@ -16,25 +16,34 @@
     </script>
 </head>
 
+@php
+    $appSetting = \App\Models\AppSetting::find(1);
+@endphp
+
 <body class="bg-base-200 min-h-screen flex items-center justify-center font-sans text-base-content">
     <div class="w-full max-w-sm p-6">
         <!-- Logo -->
         <div class="flex justify-center mb-8">
             <div class="flex items-center gap-2 text-secondary font-bold text-3xl">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
-                    <path fill-rule="evenodd"
-                        d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
-                        clip-rule="evenodd" />
-                </svg>
-                <span>{{ config('app.name') }}</span>
+                @if ($appSetting && $appSetting->app_logo)
+                    <img src="{{ $appSetting->app_logo_url }}" class="w-10 h-10 object-contain" alt="Logo">
+                @else
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                        <path fill-rule="evenodd"
+                            d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z"
+                            clip-rule="evenodd" />
+                    </svg>
+                @endif
+                <span>{{ $appSetting->app_name ?? config('app.name') }}</span>
             </div>
         </div>
 
         <div class="card bg-base-100 shadow-xl border border-base-200 rounded-2xl">
             <div class="card-body">
                 <div class="text-center mb-4 border-base-300 border-b border-dashed">
-                    <h2 class="text-2xl font-bold">Welcome Back</h2>
-                    <p class="text-base-content/60 text-sm mt-1 mb-4">Enter your credentials to access your account</p>
+                    <h2 class="text-2xl font-bold">{{ $appSetting->login_title ?? 'Welcome Back' }}</h2>
+                    <p class="text-base-content/60 text-sm mt-1 mb-4">
+                        {{ $appSetting->login_description ?? 'Enter your credentials to access your account' }}</p>
                 </div>
 
                 @if ($errors->any())
