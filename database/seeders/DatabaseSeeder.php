@@ -60,15 +60,18 @@ class DatabaseSeeder extends Seeder
         $this->command->comment('Step 2: Creating Roles...');
         $superAdminRole = Role::updateOrCreate([
             'name' => 'super-admin',
-            'guard_name' => 'web'
+            'guard_name' => 'web',
+            'color' => '#ff0000'
         ]);
         $adminRole = Role::updateOrCreate([
             'name' => 'admin',
-            'guard_name' => 'web'
+            'guard_name' => 'web',
+            'color' => '#007bff'
         ]);
         $userRole = Role::updateOrCreate([
             'name' => 'user',
-            'guard_name' => 'web'
+            'guard_name' => 'web',
+            'color' => '#2bff00'
         ]);
         $this->command->info('✔ Roles created successfully.');
 

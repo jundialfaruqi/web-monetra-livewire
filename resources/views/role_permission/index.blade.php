@@ -1,4 +1,4 @@
-<x-layout title="Role & Permission - Monetra">
+<x-layout title="Role & Permission">
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
             <h1 class="text-xl font-bold">Role & Permission</h1>
@@ -387,8 +387,8 @@
         </div>
     </div>
 
-    <dialog id="permission-modal" class="modal">
-        <div class="modal-box">
+    <dialog id="permission-modal" class="modal glass backdrop-blur-xs">
+        <div class="modal-box shadow">
             <h3 class="font-bold text-lg mb-4">Permission</h3>
             <form id="permission-form" method="POST" action="{{ route('permissions.store') }}" data-loading>
                 @csrf
@@ -444,8 +444,8 @@
         </div>
     </dialog>
 
-    <dialog id="role-modal" class="modal">
-        <div class="modal-box">
+    <dialog id="role-modal" class="modal glass backdrop-blur-xs">
+        <div class="modal-box shadow">
             <h3 class="font-bold text-lg mb-4">Role</h3>
             <form id="role-form" method="POST" action="{{ route('roles.store') }}" data-loading>
                 @csrf
@@ -453,14 +453,14 @@
                 <input type="hidden" name="_method" id="role-method" value="POST">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div class="form-control mb-2">
-                        <label class="label mb-2"><span class="label-text">Name</span></label>
+                        <label class="label mb-2"><span class="label-text">Nama</span></label>
                         <input type="text" name="name" id="role-name" class="input input-bordered">
                         @if ($errors->has('name') && old('modal_type') === 'role')
                             <span class="text-red-500 text-xs">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="form-control mb-2">
-                        <label class="label mb-2"><span class="label-text">Guard Name</span></label>
+                        <label class="label mb-2"><span class="label-text">Pilih Guard</span></label>
                         <select name="guard_name" id="role-guard" class="select select-bordered w-full">
                             <option value="web" @selected(old('guard_name') === 'web')>web</option>
                             <option value="api" @selected(old('guard_name') === 'api')>api</option>
@@ -470,10 +470,10 @@
                         @endif
                     </div>
                     <div class="form-control mb-2 md:col-span-2">
-                        <label class="label mb-2"><span class="label-text">Color</span></label>
+                        <label class="label mb-2"><span class="label-text">Pilih Warna</span></label>
                         <div class="flex gap-2 items-center">
                             <input type="color" name="color" id="role-color"
-                                class="input input-bordered p-1 w-10 h-10 rounded-md" value="#64748b">
+                                class="input-color-circle w-10 h-10" value="#64748b">
                             <input type="text" id="role-color-text" class="input input-bordered flex-1"
                                 value="#64748b" placeholder="#64748b">
                         </div>
@@ -483,12 +483,15 @@
                     </div>
                     <div class="form-control md:col-span-2">
                         <label class="label mb-2"><span class="label-text">Permissions</span></label>
-                        <div class="max-h-64 overflow-auto">
+                        <p class="text-xs text-base-content/60">Pilih semua permission/izin yang diperlukan</p>
+                        <div class="max-h-83 overflow-auto py-3 px-1">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 @foreach (($allPermissions ?? collect())->groupBy('group') as $groupName => $groupList)
-                                    <div class="border border-base-300 rounded-md p-2">
-                                        <div class="text-xs font-semibold uppercase text-base-content/60 mb-2">
-                                            {{ $groupName ?? 'Ungrouped' }}</div>
+                                    <div class="card p-3 border border-base-content/15">
+                                        <div class="border-base-content/15 border-b border-dashed mb-2">
+                                            <div class="text-xs font-semibold uppercase text-base-content/60 mb-2">
+                                                {{ $groupName ?? 'Ungrouped' }}</div>
+                                        </div>
                                         <div class="grid grid-cols-2 gap-2">
                                             @foreach ($groupList as $p)
                                                 <label class="flex items-center gap-2">

@@ -1,4 +1,4 @@
-<x-layout title="Create User - Monetra">
+<x-layout title="Create User">
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
             <h1 class="text-xl font-bold">Create User</h1>

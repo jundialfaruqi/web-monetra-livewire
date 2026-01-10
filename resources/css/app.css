@@ -80,3 +80,31 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer components {
+    /* Style for circular color input */
+    .input-color-circle {
+        @apply p-0 overflow-hidden cursor-pointer rounded-full border-0;
+        -webkit-appearance: none;
+        appearance: none;
+        border: none !important;
+    }
+
+    .input-color-circle::-webkit-color-swatch-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 9999px !important;
+    }
+
+    .input-color-circle::-webkit-color-swatch {
+        border: none !important;
+        margin: 0 !important;
+        border-radius: 9999px !important;
+    }
+
+    .input-color-circle::-moz-color-swatch {
+        border: none !important;
+        margin: 0 !important;
+        border-radius: 9999px !important;
+    }
+}

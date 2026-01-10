@@ -1,4 +1,4 @@
-<x-layout title="Edit User - Monetra">
+<x-layout title="Edit User">
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
             <h1 class="text-xl font-bold">Edit User</h1>

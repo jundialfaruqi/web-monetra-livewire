@@ -1,4 +1,4 @@
-<x-layout title="User Management - Monetra">
+<x-layout title="User Management">
     <!-- Page Title & Breadcrumbs -->
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
