@@ -56,7 +56,7 @@
             <div class="card-body">
                 <div class="text-center mb-4 border-base-300 border-b border-dashed">
                     <h2 class="text-2xl font-bold">{{ $appSetting->login_title ?? 'Welcome Back' }}</h2>
-                    <p class="text-base-content/60 text-sm mt-1 mb-4">
+                    <p class="text-base-content/60 text-xs mt-1 mb-4">
                         {{ $appSetting->login_description ?? 'Enter your credentials to access your account' }}</p>
                 </div>
 
