@@ -6,7 +6,7 @@
         </div>
         <div class="text-sm breadcrumbs text-base-content/60">
             <ul>
-                <li><a href="{{ route('dashboard.index') }}">Monetra</a></li>
+                <li><a href="{{ route('dashboard.index') }}">{{ $appSetting->app_name ?? config('app.name') }}</a></li>
                 <li><span class="text-base-content">Profile</span></li>
             </ul>
         </div>

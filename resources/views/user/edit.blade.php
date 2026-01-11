@@ -6,7 +6,7 @@
         </div>
         <div class="text-sm breadcrumbs text-base-content/60">
             <ul>
-                <li><a href="{{ route('dashboard.index') }}">Monetra</a></li>
+                <li><a href="{{ route('dashboard.index') }}">{{ $appSetting->app_name ?? config('app.name') }}</a></li>
                 <li><a href="{{ route('users.index') }}">Users</a></li>
                 <li><span class="text-base-content">Edit</span></li>
             </ul>
@@ -115,7 +115,7 @@
                     handleFile(e) {
                         const file = e.target.files[0];
                         if (!file) return;
-                
+
                         const allowed = ['image/jpeg', 'image/png', 'image/webp'];
                         if (!allowed.includes(file.type)) {
                             this.errorTitle = 'Format File Salah';
@@ -131,7 +131,7 @@
                             e.target.value = '';
                             return;
                         }
-                
+
                         this.previewUrl = URL.createObjectURL(file);
                         this.isRemoved = false;
                     },
