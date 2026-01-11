@@ -164,7 +164,7 @@
 
         <!-- Version -->
         <div class="text-center mt-8 text-xs text-base-content/40">
-            <p class="font-medium">{{ config('app.name') }} Web App</p>
+            <p class="font-medium">{{ $appSetting->app_name ?? config('app.name') }} Web App</p>
             <p>Version 1.0.0</p>
         </div>
     </div>
